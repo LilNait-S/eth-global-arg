@@ -4,17 +4,12 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { PageHeader } from "@/components/page-header"
 import { HackerCard } from "@/components/hacker-card"
-import {
-  Code2,
-  Globe,
-  MapPin,
-  MessageSquare,
-  Users,
-  Zap,
-} from "lucide-react"
+import { HackerDetailDialog } from "@/components/hacker-detail-dialog"
+import { Code2, Globe, MapPin, MessageSquare, Users, Zap } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
+import { useGetPoapsByEventId } from "@/services/api/poap"
 
 // Mock data - replace with real API data later
 const mockHackers = [
@@ -84,6 +79,9 @@ export default function FindHackersPage() {
   const searchParams = useSearchParams()
   const locationParam = searchParams.get("location")
   const eventParam = searchParams.get("event")
+
+  const { data } = useGetPoapsByEventId({ eventId: "214114" })
+  console.log("data", data)
 
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [selectedLocation, setSelectedLocation] = useState<string | null>(
@@ -256,13 +254,20 @@ export default function FindHackersPage() {
                   }
                   selectedTags={selectedTags}
                   actionButtons={
-                    <Button
-                      size="sm"
-                      className="bg-primary/10 hover:bg-primary/20 border border-primary text-primary shrink-0"
-                    >
-                      <MessageSquare className="h-3 w-3 mr-1" />
-                      Connect
-                    </Button>
+                    <div className="flex gap-2 flex-1">
+                      <HackerDetailDialog
+                        hacker={hacker}
+                        selectedTags={selectedTags}
+                      />
+
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-primary/10 hover:bg-primary/20 border border-primary text-primary"
+                      >
+                        <MessageSquare className="h-3 w-3 mr-1" />
+                        Request match
+                      </Button>
+                    </div>
                   }
                 />
               ))}
