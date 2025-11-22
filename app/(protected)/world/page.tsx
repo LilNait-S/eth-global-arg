@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
@@ -28,53 +27,49 @@ const events: Event[] = [
     location: "Bangkok",
     date: "Nov 2024",
   },
-  { 
-    name: "ETH Denver", 
-    x: 18, 
-    y: 38, 
-    location: "Denver", 
-    date: "Feb 2025" 
+  {
+    name: "ETH Denver",
+    x: 18,
+    y: 38,
+    location: "Denver",
+    date: "Feb 2025",
   },
-  { 
-    name: "ETH Prague", 
-    x: 52, 
-    y: 32, 
-    location: "Prague", 
-    date: "May 2025" 
+  {
+    name: "ETH Prague",
+    x: 52,
+    y: 32,
+    location: "Prague",
+    date: "May 2025",
   },
-  { 
-    name: "ETH CC", 
-    x: 50, 
-    y: 30, 
-    location: "Brussels", 
-    date: "Jul 2025" 
+  {
+    name: "ETH CC",
+    x: 50,
+    y: 30,
+    location: "Brussels",
+    date: "Jul 2025",
   },
-  { 
-    name: "Blockchain Conference", 
-    x: 78, 
-    y: 40, 
-    location: "Pyongyang", 
-    date: "Mar 2025" 
+  {
+    name: "Blockchain Conference",
+    x: 78,
+    y: 40,
+    location: "Pyongyang",
+    date: "Mar 2025",
   },
 ]
 
 export default function WorldPage() {
   const [hoveredEvent, setHoveredEvent] = useState<string | null>(null)
 
-  const handleViewEvent = (eventName: string) => {
-    console.log(`Viewing event: ${eventName}`)
-    // Navigate to event details or implement event logic
-  }
-
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-background">
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-20 bg-linear-to-b from-background to-transparent py-4 px-6">
         <div className="flex justify-between items-center max-w-7xl mx-auto">
-          <Link href="/profile">
-            <Button className="bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-sm px-6 shadow-[0_0_15px_rgba(var(--primary),0.3)]">
-              ← Back
-            </Button>
+          <Link
+            href="/profile"
+            className="bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-sm px-6 py-2 rounded-md shadow-[0_0_15px_rgba(var(--primary),0.3)] transition-all"
+          >
+            ← Back
           </Link>
           <h1 className="text-2xl font-bold text-primary tracking-wider font-mono uppercase">
             Event Map
@@ -139,18 +134,23 @@ export default function WorldPage() {
                           </p>
                         </div>
 
-                        {/* Action Buttons */}
+                        {/* Action Links */}
                         <div className="space-y-2">
-                          <Button
-                            onClick={() => handleViewEvent(event.name)}
-                            className="w-full bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--primary),0.4)] transition-all"
+                          <Link
+                            href={`/events?location=${encodeURIComponent(
+                              event.location
+                            )}`}
+                            className="block w-full bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--primary),0.4)] transition-all rounded-md px-4 py-2 text-center"
                           >
-                            🎫 View Event
-                          </Button>
-                          <Link href={`/find-hackers?location=${encodeURIComponent(event.location)}&event=${encodeURIComponent(event.name)}`}>
-                            <Button className="w-full bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all">
-                              👥 Find Hackers
-                            </Button>
+                            🎫 View Events
+                          </Link>
+                          <Link
+                            href={`/find-hackers?location=${encodeURIComponent(
+                              event.location
+                            )}&event=${encodeURIComponent(event.name)}`}
+                            className="block w-full bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all rounded-md px-4 py-2 text-center"
+                          >
+                            👥 Find Hackers
                           </Link>
                         </div>
 
