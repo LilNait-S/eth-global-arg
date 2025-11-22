@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import {
   Dialog,
   DialogContent,
@@ -8,7 +7,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Eye, MapPin, MessageSquare, Trophy, Zap } from "lucide-react"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { Eye, MapPin, Trophy, Zap } from "lucide-react"
 
 interface Hacker {
   id: number
@@ -60,7 +60,6 @@ export function HackerDetailDialog({
                 alt={hacker.name}
                 className="relative w-20 h-20 sm:w-24 sm:h-24 object-cover"
               />
-            
             </div>
 
             <div className="text-center space-y-1 sm:space-y-2 w-full px-2">
@@ -162,8 +161,7 @@ export function HackerDetailDialog({
 
           {/* Action Button */}
           <Button className="w-full bg-primary hover:bg-primary/80 text-primary-foreground font-mono text-xs sm:text-sm h-10 sm:h-12 shadow-[0_0_20px_rgba(var(--primary),0.4)]">
-            <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-            Send Connection Request
+            Invite to Hacker House
           </Button>
         </div>
       </DialogContent>
