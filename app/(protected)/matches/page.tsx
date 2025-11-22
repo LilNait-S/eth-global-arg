@@ -4,7 +4,16 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { PageHeader } from "@/components/page-header"
 import { HackerCard } from "@/components/hacker-card"
-import { Heart, MessageSquare, Trophy, Users, UserMinus } from "lucide-react"
+import { HackerDetailDialog } from "@/components/hacker-detail-dialog"
+import { Badge } from "@/components/ui/badge"
+import {
+  Heart,
+  MessageSquare,
+  Trophy,
+  Users,
+  UserMinus,
+  Clock,
+} from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -21,6 +30,8 @@ const myConnections = [
     poaps: 23,
     bio: "Building the future of web3, one block at a time",
     connectedAt: "2024-11-15",
+    status: "accepted" as const,
+    matchScore: 95,
   },
   {
     id: 2,
@@ -33,6 +44,8 @@ const myConnections = [
     poaps: 18,
     bio: "Passionate about decentralized systems",
     connectedAt: "2024-11-18",
+    status: "pending" as const,
+    matchScore: 88,
   },
   {
     id: 3,
@@ -45,6 +58,8 @@ const myConnections = [
     poaps: 20,
     bio: "Decentralization advocate",
     connectedAt: "2024-11-20",
+    status: "accepted" as const,
+    matchScore: 78,
   },
   {
     id: 4,
@@ -57,6 +72,8 @@ const myConnections = [
     poaps: 31,
     bio: "Securing the decentralized future with robust architecture",
     connectedAt: "2024-11-10",
+    status: "accepted" as const,
+    matchScore: 92,
   },
   {
     id: 5,
@@ -69,6 +86,8 @@ const myConnections = [
     poaps: 16,
     bio: "Designing intuitive experiences for the metaverse",
     connectedAt: "2024-11-22",
+    status: "pending" as const,
+    matchScore: 75,
   },
   {
     id: 6,
@@ -81,6 +100,8 @@ const myConnections = [
     poaps: 27,
     bio: "Optimizing yields and building sustainable DeFi protocols",
     connectedAt: "2024-11-08",
+    status: "accepted" as const,
+    matchScore: 87,
   },
   {
     id: 7,
@@ -93,6 +114,8 @@ const myConnections = [
     poaps: 19,
     bio: "Bridging developers and protocols through education",
     connectedAt: "2024-11-12",
+    status: "accepted" as const,
+    matchScore: 81,
   },
   {
     id: 8,
@@ -105,6 +128,8 @@ const myConnections = [
     poaps: 25,
     bio: "Finding vulnerabilities before the bad actors do",
     connectedAt: "2024-11-05",
+    status: "pending" as const,
+    matchScore: 84,
   },
 ]
 
@@ -113,11 +138,6 @@ export default function MatchesPage() {
 
   const handleDisconnect = (id: number) => {
     setConnections((prev) => prev.filter((conn) => conn.id !== id))
-  }
-
-  const handleMessage = (name: string) => {
-    console.log(`Opening chat with ${name}`)
-    // Implement messaging functionality
   }
 
   return (
@@ -190,42 +210,66 @@ export default function MatchesPage() {
         </div>
       ) : (
         <ScrollArea className="h-[calc(100dvh-220px)]">
-          <div className="space-y-3 pr-4">
+          <div className="space-y-3 pr-3">
             {connections.map((hacker, index) => (
               <HackerCard
                 key={hacker.id}
                 hacker={hacker}
                 index={index}
                 avatarBadge={
-                  <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground p-1 rounded-full">
-                    <Heart className="h-3 w-3 fill-current" />
-                  </div>
+                  hacker.status === "pending" ? (
+                    <div className="absolute -top-2 -right-2 bg-chart-2 text-primary-foreground p-1 rounded-full animate-pulse">
+                      <Clock className="h-3 w-3" />
+                    </div>
+                  ) : (
+                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground p-1 rounded-full">
+                      <Heart className="h-3 w-3 fill-current" />
+                    </div>
+                  )
                 }
                 actionButtons={
-                  <div className="flex gap-2 shrink-0">
-                    <Button
-                      size="sm"
-                      onClick={() => handleMessage(hacker.name)}
-                      className="bg-primary/10 hover:bg-primary/20 border border-primary text-primary"
-                    >
-                      <MessageSquare className="h-3 w-3 mr-1" />
-                      Message
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleDisconnect(hacker.id)}
-                      className="bg-card/10 hover:bg-card/20 border border-muted-foreground/30 text-muted-foreground hover:border-red-500/50 hover:text-red-500"
-                    >
-                      <UserMinus className="h-3 w-3" />
-                    </Button>
+                  <div className="flex gap-2 flex-1">
+                    {hacker.status === "pending" ? (
+                      <Badge
+                        variant="outline"
+                        className="flex-1 justify-center bg-chart-2/10 text-chart-2 border-chart-2/30 font-mono text-xs py-2"
+                      >
+                        <Clock className="h-3 w-3 mr-1" />
+                        Pending Approval
+                      </Badge>
+                    ) : (
+                      <>
+                        <HackerDetailDialog
+                          hacker={hacker}
+                          selectedTags={[]}
+                        />
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDisconnect(hacker.id)}
+                          className="bg-card/10 hover:bg-card/20 border border-muted-foreground/30 text-muted-foreground hover:border-red-500/50 hover:text-red-500"
+                        >
+                          <UserMinus className="h-3 w-3" />
+                        </Button>
+                      </>
+                    )}
                   </div>
                 }
                 extraInfo={
-                  <p className="text-[10px] text-muted-foreground font-mono mt-2 text-center">
-                    Connected on{" "}
-                    {new Date(hacker.connectedAt).toLocaleDateString()}
-                  </p>
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <p className="text-[10px] text-muted-foreground font-mono">
+                      {hacker.status === "pending" ? "Sent" : "Connected"} on{" "}
+                      {new Date(hacker.connectedAt).toLocaleDateString()}
+                    </p>
+                    {hacker.status === "pending" && (
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] bg-chart-2/10 text-chart-2 border-chart-2/30"
+                      >
+                        Awaiting Response
+                      </Badge>
+                    )}
+                  </div>
                 }
               />
             ))}
