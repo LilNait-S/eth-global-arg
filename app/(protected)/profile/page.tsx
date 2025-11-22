@@ -6,6 +6,7 @@ import { useGetAllPoapsByAddress } from "@/services/api/poap"
 import { useGetProfileTalentProtocol } from "@/services/api/talent-protocol"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { ExternalLink, Trophy, Zap } from "lucide-react"
+import Link from "next/link"
 import { useAccount } from "wagmi"
 
 export default function ProfilePage() {
@@ -110,32 +111,6 @@ export default function ProfilePage() {
                   </div>
                 )}
               </div>
-
-              {/* Connected Accounts */}
-              {profile?.accounts && profile.accounts.length > 0 && (
-                <div className="w-full space-y-1.5">
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">
-                    ⚡ Linked Accounts
-                  </p>
-                  {profile.accounts.slice(0, 3).map((account) => (
-                    <div
-                      key={account.identifier}
-                      className="flex items-center gap-2 text-sm p-2 rounded bg-card border border-primary/10 hover:border-primary/30 transition-colors min-w-0"
-                    >
-                      <Badge
-                        variant="outline"
-                        className="text-[10px] shrink-0 capitalize border-primary/30 text-primary"
-                      >
-                        {account.source}
-                      </Badge>
-                      <span className="text-muted-foreground flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-mono">
-                        {formatIdentifier(account.username) ||
-                          formatIdentifier(account.identifier)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
 
             <div className="flex flex-col items-center space-y-3">
@@ -183,7 +158,33 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <div className="flex flex-col">Botones</div>
+            <div className="flex flex-col items-center justify-center">
+              {/* Connected Accounts */}
+              {profile?.accounts && profile.accounts.length > 0 && (
+                <div className="w-full space-y-1.5">
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">
+                    ⚡ Linked Accounts
+                  </p>
+                  {profile.accounts.slice(0, 3).map((account) => (
+                    <div
+                      key={account.identifier}
+                      className="flex items-center gap-2 text-sm p-2 rounded bg-card border border-primary/10 hover:border-primary/30 transition-colors min-w-0"
+                    >
+                      <Badge
+                        variant="outline"
+                        className="text-[10px] shrink-0 capitalize border-primary/30 text-primary"
+                      >
+                        {account.source}
+                      </Badge>
+                      <span className="text-muted-foreground flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-mono">
+                        {formatIdentifier(account.username) ||
+                          formatIdentifier(account.identifier)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="w-full mt-6">
@@ -206,7 +207,7 @@ export default function ProfilePage() {
               </div>
             ) : (
               <div className="relative overflow-hidden rounded-lg bg-card/30 p-3">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <Trophy className="h-4 w-4 text-primary animate-pulse shrink-0" />
                     <p className="text-xs font-medium text-primary capitalize tracking-wide">
@@ -235,7 +236,7 @@ export default function ProfilePage() {
                           <img
                             src={poap.event.image_url}
                             alt={poap.event.name}
-                            className="relative size-20 rounded-full object-cover"
+                            className="relative size-16 rounded-full object-cover"
                           />
                         </div>
                         <a
@@ -257,6 +258,25 @@ export default function ProfilePage() {
                 </ScrollArea>
               </div>
             )}
+          </div>
+
+          <div></div>
+
+          {/* Action Buttons */}
+          <div className="w-full mt-6 grid grid-cols-2 gap-3">
+            <Link
+              href={"/world"}
+              className="w-full flex justify-center items-center bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-sm h-12 rounded-lg shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all uppercase tracking-wider"
+            >
+              🌍 Enter World
+            </Link>
+
+            <Link
+              href={"/events"}
+              className="w-full flex justify-center items-center bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-sm h-12 rounded-lg shadow-[0_0_15px_rgba(var(--chart-2),0.3)] hover:shadow-[0_0_25px_rgba(var(--chart-2),0.5)] transition-all uppercase tracking-wider"
+            >
+              🎯 Browse Events
+            </Link>
           </div>
         </div>
       </main>
