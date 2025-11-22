@@ -34,14 +34,14 @@ export function HackerCard({
       className="bg-card/10 border border-primary/20 rounded-lg p-4 hover:border-primary/40 transition-all hover:shadow-[0_0_20px_rgba(var(--primary),0.2)]"
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      <div className="flex flex-col gap-1">
-        <div className="flex gap-4">
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-4 items-center">
           {/* Avatar */}
           <div className="relative shrink-0">
             <img
               src={hacker.avatar}
               alt={hacker.name}
-              className="relative w-20 h-20 rounded-lg object-cover border-2 border-primary/30"
+              className="relative w-20 h-20 object-cover"
             />
             {avatarBadge}
           </div>
@@ -61,25 +61,25 @@ export function HackerCard({
                 </p>
               </div>
             </div>
-
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                <span>{hacker.location}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Zap className="h-3 w-3 text-chart-3" />
-                <span>Rank #{hacker.rank}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Trophy className="h-3 w-3 text-chart-2" />
-                <span>{hacker.poaps} POAPs</span>
-              </div>
-            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 justify-between">
+        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <MapPin className="h-3 w-3" />
+            <span>{hacker.location}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Zap className="h-3 w-3 text-chart-3" />
+            <span>Rank #{hacker.rank}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Trophy className="h-3 w-3 text-chart-2" />
+            <span>{hacker.poaps} POAPs</span>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-1">
             <p className="text-sm text-muted-foreground line-clamp-1">
               {hacker.bio}
