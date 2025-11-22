@@ -157,6 +157,14 @@ export default function WorldPage() {
                           >
                             👥 Find Hackers
                           </Link>
+                          <Link
+                            href={`/find-hacker-houses?location=${encodeURIComponent(
+                              event.location
+                            )}&event=${encodeURIComponent(event.name)}`}
+                            className="block w-full bg-card hover:bg-card/80 border-2 border-chart-3 text-chart-3 font-mono text-[10px] sm:text-xs h-8 sm:h-9 shadow-[0_0_15px_rgba(var(--chart-3),0.3)] transition-all rounded-md px-3 sm:px-4 py-1.5 sm:py-2 text-center"
+                          >
+                            🏠 View Hacker Houses
+                          </Link>
                         </div>
 
                         {/* Modal Arrow */}
