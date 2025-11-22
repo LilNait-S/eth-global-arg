@@ -22,6 +22,13 @@ export default function ProfilePage() {
 
   const profile = talentProtocolData?.profile
 
+  const formatIdentifier = (identifier: string) => {
+    if (identifier.startsWith("0x")) {
+      return `${identifier.slice(0, 6)}...${identifier.slice(-4)}`
+    }
+    return identifier
+  }
+
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -54,11 +61,11 @@ export default function ProfilePage() {
             </div>
             <span className="text-xl font-bold">hackaton arg</span>
           </div>
-          <ConnectButton />
+          <ConnectButton accountStatus={"avatar"} chainStatus={"none"} />
         </nav>
       </header>
 
-      <main className="container mx-auto max-w-7xl px-4 py-8">
+      <main className="container mx-auto max-w-7xl px-4 py-4">
         <div className="grid gap-6 md:grid-cols-[300px_1fr]">
           {/* Profile Sidebar */}
           <aside className="space-y-6">
@@ -182,13 +189,17 @@ export default function ProfilePage() {
                   {profile.accounts.map((account) => (
                     <div
                       key={account.identifier}
-                      className="flex items-center gap-2 text-sm p-2 rounded-md bg-secondary/50"
+                      className="flex items-center gap-2 text-sm p-2 rounded-md bg-secondary/50 min-w-0"
                     >
-                      <Badge variant="outline" className="text-xs">
+                      <Badge
+                        variant="outline"
+                        className="text-xs shrink-0 capitalize"
+                      >
                         {account.source}
                       </Badge>
-                      <span className="text-muted-foreground truncate">
-                        {account.username || account.identifier.slice(0, 8)}
+                      <span className="text-muted-foreground flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
+                        {formatIdentifier(account.username) ||
+                          formatIdentifier(account.identifier)}
                       </span>
                     </div>
                   ))}
