@@ -16,8 +16,8 @@ export default function ProfilePage() {
 
   const profile = talentProtocolData?.profile
 
-  const formatIdentifier = (identifier: string) => {
-    if (identifier.startsWith("0x")) {
+  const formatIdentifier = (identifier?: string) => {
+    if (identifier?.startsWith("0x")) {
       return `${identifier.slice(0, 6)}...${identifier.slice(-4)}`
     }
     return identifier
