@@ -63,23 +63,28 @@ export default function WorldPage() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-background">
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 bg-linear-to-b from-background to-transparent py-4 px-6">
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
+      <div className="absolute top-0 left-0 right-0 z-20 bg-linear-to-b from-background to-transparent py-3 sm:py-4 px-4 sm:px-6">
+        <div className="flex justify-between items-center max-w-7xl mx-auto gap-2">
           <Link
             href="/profile"
-            className="bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-sm px-6 py-2 rounded-md shadow-[0_0_15px_rgba(var(--primary),0.3)] transition-all"
+            className="bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-xs sm:text-sm px-3 sm:px-6 py-1.5 sm:py-2 rounded-md shadow-[0_0_15px_rgba(var(--primary),0.3)] transition-all shrink-0"
           >
             ← Back
           </Link>
-          <h1 className="text-2xl font-bold text-primary tracking-wider font-mono uppercase">
+          <h1 className="text-base sm:text-2xl font-bold text-primary tracking-wider font-mono uppercase text-center">
             Event Map
           </h1>
-          <div className="w-20" /> {/* Spacer */}
+          <Link
+            href="/events"
+            className="bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-xs sm:text-sm px-3 sm:px-6 py-1.5 sm:py-2 rounded-md shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all shrink-0"
+          >
+            Events →
+          </Link>
         </div>
       </div>
 
       {/* Map Container */}
-      <ScrollArea className="h-full w-full pt-20">
+      <ScrollArea className="h-full w-full pt-14 sm:pt-20">
         <div className="relative min-w-max h-full">
           {/* World Map Background */}
           <div className="relative h-screen">
@@ -104,14 +109,14 @@ export default function WorldPage() {
               >
                 {/* Event Marker */}
                 <div className="relative cursor-pointer group">
-                  <div className="text-3xl animate-bounce filter drop-shadow-[0_0_8px_rgba(var(--primary),0.8)]">
+                  <div className="text-2xl sm:text-3xl animate-bounce filter drop-shadow-[0_0_8px_rgba(var(--primary),0.8)]">
                     🎯
                   </div>
 
                   {/* Event Label */}
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                    <div className="bg-card border-2 border-primary px-3 py-1 rounded shadow-[0_0_15px_rgba(var(--primary),0.4)]">
-                      <p className="text-primary font-mono text-xs font-bold tracking-wide uppercase">
+                  <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                    <div className="bg-card border-2 border-primary px-2 sm:px-3 py-0.5 sm:py-1 rounded shadow-[0_0_15px_rgba(var(--primary),0.4)]">
+                      <p className="text-primary font-mono text-[10px] sm:text-xs font-bold tracking-wide uppercase">
                         {event.location}
                       </p>
                     </div>
@@ -119,28 +124,28 @@ export default function WorldPage() {
 
                   {/* Hover Modal */}
                   {hoveredEvent === event.name && (
-                    <div className="absolute top-full mt-12 left-1/2 -translate-x-1/2 z-30 animate-in fade-in slide-in-from-top-2 duration-200">
-                      <div className="bg-card border-2 border-primary rounded-lg p-4 shadow-[0_0_30px_rgba(var(--primary),0.6)] min-w-[220px]">
+                    <div className="absolute top-full mt-10 sm:mt-12 left-1/2 -translate-x-1/2 z-30 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="bg-card border-2 border-primary rounded-lg p-3 sm:p-4 shadow-[0_0_30px_rgba(var(--primary),0.6)] min-w-[200px] sm:min-w-[220px]">
                         {/* Modal Header */}
-                        <div className="mb-3 pb-2 border-b border-primary/30">
-                          <p className="text-chart-2 font-mono text-xs mb-1">
+                        <div className="mb-2 sm:mb-3 pb-2 border-b border-primary/30">
+                          <p className="text-chart-2 font-mono text-[10px] sm:text-xs mb-1">
                             {event.date}
                           </p>
-                          <p className="text-foreground font-mono text-sm font-bold">
+                          <p className="text-foreground font-mono text-xs sm:text-sm font-bold">
                             {event.name}
                           </p>
-                          <p className="text-muted-foreground font-mono text-xs mt-1">
+                          <p className="text-muted-foreground font-mono text-[10px] sm:text-xs mt-1">
                             📍 {event.location}
                           </p>
                         </div>
 
                         {/* Action Links */}
-                        <div className="space-y-2">
+                        <div className="space-y-1.5 sm:space-y-2">
                           <Link
                             href={`/events?location=${encodeURIComponent(
                               event.location
                             )}`}
-                            className="block w-full bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--primary),0.4)] transition-all rounded-md px-4 py-2 text-center"
+                            className="block w-full bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-[10px] sm:text-xs h-8 sm:h-9 shadow-[0_0_15px_rgba(var(--primary),0.4)] transition-all rounded-md px-3 sm:px-4 py-1.5 sm:py-2 text-center"
                           >
                             🎫 View Events
                           </Link>
@@ -148,14 +153,14 @@ export default function WorldPage() {
                             href={`/find-hackers?location=${encodeURIComponent(
                               event.location
                             )}&event=${encodeURIComponent(event.name)}`}
-                            className="block w-full bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all rounded-md px-4 py-2 text-center"
+                            className="block w-full bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-[10px] sm:text-xs h-8 sm:h-9 shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all rounded-md px-3 sm:px-4 py-1.5 sm:py-2 text-center"
                           >
                             👥 Find Hackers
                           </Link>
                         </div>
 
                         {/* Modal Arrow */}
-                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-card border-l-2 border-t-2 border-primary rotate-45" />
+                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-card border-l-2 border-t-2 border-primary rotate-45" />
                       </div>
                     </div>
                   )}
@@ -196,10 +201,10 @@ export default function WorldPage() {
       </div>
 
       {/* Corner decorations */}
-      <div className="absolute top-20 left-4 w-12 h-12 border-l-2 border-t-2 border-primary/30 pointer-events-none" />
-      <div className="absolute top-20 right-4 w-12 h-12 border-r-2 border-t-2 border-primary/30 pointer-events-none" />
-      <div className="absolute bottom-4 left-4 w-12 h-12 border-l-2 border-b-2 border-primary/30 pointer-events-none" />
-      <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-primary/30 pointer-events-none" />
+      <div className="hidden sm:block absolute top-20 left-4 w-12 h-12 border-l-2 border-t-2 border-primary/30 pointer-events-none" />
+      <div className="hidden sm:block absolute top-20 right-4 w-12 h-12 border-r-2 border-t-2 border-primary/30 pointer-events-none" />
+      <div className="hidden sm:block absolute bottom-4 left-4 w-12 h-12 border-l-2 border-b-2 border-primary/30 pointer-events-none" />
+      <div className="hidden sm:block absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-primary/30 pointer-events-none" />
     </div>
   )
 }
