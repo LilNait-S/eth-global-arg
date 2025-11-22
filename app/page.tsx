@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useGetEventPoapById, useGetScanAddress } from "@/services/api/poap"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { ArrowRight, Menu, X, Zap } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -9,10 +8,6 @@ import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 
 export default function Home() {
-  const { data } = useGetScanAddress()
-  const { data: eventData } = useGetEventPoapById({ eventId: "16947" })
-  console.log("eventData", eventData)
-  console.log("data", data)
   const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { isConnected } = useAccount()

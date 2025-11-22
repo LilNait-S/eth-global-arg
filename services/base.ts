@@ -16,6 +16,7 @@ export const backendBasePath = {
 
 export const externalBackendBasePath = {
   poap: "https://api.poap.tech",
+  talent_protocol: "https://api.talentprotocol.com/",
 }
 
 export const prefix = "/api/v1"

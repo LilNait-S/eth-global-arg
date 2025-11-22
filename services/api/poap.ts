@@ -1,5 +1,5 @@
 import { BASE_CACHE_KEYS } from "@/constants/query-cache"
-import { PoapEvent } from "@/types/poap"
+import { PoapEvent, PoapToken } from "@/types/poap"
 import { useAccount } from "wagmi"
 import {
   externalBackendBasePath,
@@ -22,9 +22,9 @@ export const useGetEventPoapById = ({ eventId }: { eventId: string }) => {
   })
 }
 
-export const useGetScanAddress = () => {
+export const useGetAllPoapsByAddress = () => {
   const { address } = useAccount()
-  return useAppQuery<unknown>({
+  return useAppQuery<PoapToken[]>({
     fetcher: async () =>
       await genericAuthRequest("get", `/actions/scan/${address}`, undefined, {
         baseURL: externalBackendBasePath.poap,
