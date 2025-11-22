@@ -5,9 +5,16 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { useGetAllPoapsByAddress } from "@/services/api/poap"
 import { useGetProfileTalentProtocol } from "@/services/api/talent-protocol"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { ExternalLink, Trophy, Zap } from "lucide-react"
+import {
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Trophy,
+  Zap,
+} from "lucide-react"
 import Link from "next/link"
 import { useAccount } from "wagmi"
+import { useState } from "react"
 
 export default function ProfilePage() {
   const { address } = useAccount()
@@ -15,6 +22,26 @@ export default function ProfilePage() {
   const { data: talentProtocolData } = useGetProfileTalentProtocol()
 
   const profile = talentProtocolData?.profile
+
+  const avatars = [
+    "/avatars/spr_cat_wcapsulebig_01.gif",
+    "/avatars/spr_cat_wcapsulebig_02.gif",
+    "/avatars/spr_cat_wcapsulebig_03.gif",
+    "/avatars/spr_cat_wcapsulebig_04.gif",
+    "/avatars/spr_cat_wcapsulebig_05.gif",
+  ]
+
+  const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0)
+
+  const nextAvatar = () => {
+    setCurrentAvatarIndex((prev) => (prev + 1) % avatars.length)
+  }
+
+  const previousAvatar = () => {
+    setCurrentAvatarIndex(
+      (prev) => (prev - 1 + avatars.length) % avatars.length
+    )
+  }
 
   const formatIdentifier = (identifier?: string) => {
     if (identifier?.startsWith("0x")) {
@@ -62,7 +89,7 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 place-content-center">
+            <div className="grid grid-cols-3 gap-1 place-content-center">
               <div className="text-center w-full flex gap-2 items-center flex-col justify-center">
                 {/* Player Info Header */}
                 <div className="relative">
@@ -84,9 +111,9 @@ export default function ProfilePage() {
                 )}
 
                 {/* Stats Panel */}
-              <div className="w-full space-y-2">
-                {profile?.rank_position && (
-                  <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-chart-1/10 via-chart-2/10 to-chart-3/10 border border-primary/30 p-3">
+                <div className="w-full space-y-2">
+                  {profile?.rank_position && (
+                    <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-chart-1/10 via-chart-2/10 to-chart-3/10 border border-primary/30 p-3">
                       <div className="absolute inset-0 bg-linear-to-r from-transparent via-primary/5 to-transparent animate-shimmer" />
                       <div className="relative flex items-center gap-3">
                         <div className="p-2 bg-primary/20 rounded-lg">
@@ -104,8 +131,8 @@ export default function ProfilePage() {
                     </div>
                   )}
 
-                {profile?.onchain_since && (
-                  <div className="px-3 py-2 bg-card/20 border border-border rounded-md">
+                  {profile?.onchain_since && (
+                    <div className="px-3 py-2 bg-card/20 border border-border rounded-md">
                       <p className="text-[10px] text-chart-3 font-mono uppercase tracking-widest">
                         ⚡ ONCHAIN SINCE{" "}
                         {new Date(profile.onchain_since).toLocaleDateString(
@@ -121,23 +148,43 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-            <div className="flex flex-col items-center space-y-3">
-              <div className="flex items-center gap-2 px-3 py-1 bg-card/20 border border-primary/20 rounded-md font-mono text-xs">
+              <div className="flex flex-col items-center space-y-3">
+                <div className="flex items-center gap-2 px-3 py-1 bg-card/20 border border-primary/20 rounded-md font-mono text-xs">
                   <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
                   {address?.slice(0, 6)}...{address?.slice(-4)}
                 </div>
 
                 <img
-                  src={"/spr_catbig_w_capsule.gif"}
+                  src={avatars[currentAvatarIndex]}
                   alt="Profile Avatar"
-                  className="size-48 object-cover"
+                  className="h-full w object-cover mb-0"
                 />
+
+                <div className="flex gap-2">
+                  {/* Avatar Navigation Arrows */}
+                  <button
+                    onClick={previousAvatar}
+                    className="p-1 bg-card/10 hover:bg-card/20 border-2 border-primary text-primary rounded-lg shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all cursor-pointer"
+                    aria-label="Previous avatar"
+                  >
+                    <ChevronLeft className="size-4" />
+                  </button>
+
+                  <button
+                    onClick={nextAvatar}
+                    className="p-1 bg-card/10 hover:bg-card/20 border-2 border-primary text-primary rounded-lg shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all cursor-pointer"
+                    aria-label="Next avatar"
+                  >
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
 
                 {profile?.bio && (
                   <p className="text-sm text-center text-muted-foreground line-clamp-3 px-2">
                     {profile.bio}
                   </p>
                 )}
+
                 <div className="flex gap-1.5 flex-wrap justify-center">
                   {profile?.main_role && (
                     <Badge variant="default" className="text-xs">
@@ -174,10 +221,10 @@ export default function ProfilePage() {
                       ⚡ Linked Accounts
                     </p>
                     {profile.accounts.slice(0, 3).map((account) => (
-                    <div
-                      key={account.identifier}
-                      className="flex items-center gap-2 text-sm p-2 rounded bg-card/10 border border-primary/10 hover:border-primary/30 transition-colors min-w-0"
-                    >
+                      <div
+                        key={account.identifier}
+                        className="flex items-center gap-2 text-sm p-2 rounded bg-card/10 border border-primary/10 hover:border-primary/30 transition-colors min-w-0"
+                      >
                         <Badge
                           variant="outline"
                           className="text-[10px] shrink-0 capitalize border-primary/30 text-primary"
@@ -197,8 +244,8 @@ export default function ProfilePage() {
 
             <div className="w-full mt-6">
               {/* POAP Section - All in One */}
-            {!data || data.length === 0 ? (
-              <div className="flex items-center justify-center gap-3 py-6 text-center rounded-lg bg-card/80">
+              {!data || data.length === 0 ? (
+                <div className="flex items-center justify-center gap-3 py-6 text-center rounded-lg bg-card/80">
                   <div className="relative">
                     <Trophy className="h-8 w-8 text-muted-foreground/50" />
                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary/30 rounded-full animate-ping" />
