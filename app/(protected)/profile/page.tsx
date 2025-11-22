@@ -24,262 +24,271 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-safe">
-      {/* Header - Optimizado para móvil */}
-      <header className="flex justify-end p-2 h-14">
-        <ConnectButton
-          accountStatus={"avatar"}
-          chainStatus={"none"}
-          showBalance={false}
-        />
-      </header>
+    <div className="min-h-screen bg-background relative">
+      {/* Background Image */}
+      <div
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ backgroundImage: "url('/spr_catbig_background.png')" }}
+      />
 
-      <main className="px-2 space-y-4 max-w-2xl mx-auto h-[calc(100dvh-3.5rem)]">
-        <div className="flex flex-col justify-center items-center h-full">
-          {/* Welcome Message */}
-          <div className="mb-6 text-center space-y-2">
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              <p className="text-xs font-mono uppercase tracking-widest text-primary">
-                System Online
-              </p>
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground">
-              Welcome, Builder
-            </h1>
-            <p className="text-sm text-muted-foreground font-mono">
-              <span className="text-chart-2">▸</span> Initializing your cypher
-              identity...
-            </p>
-          </div>
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Header - Optimizado para móvil */}
+        <header className="flex justify-end p-2 h-14">
+          <ConnectButton
+            accountStatus={"avatar"}
+            chainStatus={"none"}
+            showBalance={false}
+          />
+        </header>
 
-          <div className="grid grid-cols-3 gap-2 place-content-center">
-            <div className="text-center w-full flex gap-2 items-center flex-col justify-center">
-              {/* Player Info Header */}
-              <div className="relative">
-                <h2 className="text-xl font-bold truncate px-2 text-primary animate-pulse">
-                  {profile?.display_name || profile?.name || "PLAYER_001"}
-                </h2>
-                <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-ping" />
+        <main className="px-2 space-y-4 max-w-2xl mx-auto h-[calc(100dvh-3.5rem)]">
+          <div className="flex flex-col justify-center items-center h-full">
+            {/* Welcome Message */}
+            <div className="mb-6 text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                <p className="text-xs font-mono uppercase tracking-widest text-primary">
+                  System Online
+                </p>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               </div>
+              <h1 className="text-2xl font-bold text-foreground">
+                Welcome, Builder
+              </h1>
+              <p className="text-sm text-muted-foreground font-mono">
+                <span className="text-chart-2">▸</span> Initializing your cypher
+                identity...
+              </p>
+            </div>
 
-              {profile?.location && (
-                <p className="text-xs text-chart-2 font-medium">
-                  📍 {profile.location}
-                </p>
-              )}
-              {profile?.ens && (
-                <p className="text-xs text-primary font-bold break-all px-2 bg-primary/10 py-1 rounded">
-                  {profile.ens}
-                </p>
-              )}
+            <div className="grid grid-cols-3 gap-2 place-content-center">
+              <div className="text-center w-full flex gap-2 items-center flex-col justify-center">
+                {/* Player Info Header */}
+                <div className="relative">
+                  <h2 className="text-xl font-bold truncate px-2 text-primary animate-pulse">
+                    {profile?.display_name || profile?.name || "PLAYER_001"}
+                  </h2>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-ping" />
+                </div>
 
-              {/* Stats Panel */}
+                {profile?.location && (
+                  <p className="text-xs text-chart-2 font-medium">
+                    📍 {profile.location}
+                  </p>
+                )}
+                {profile?.ens && (
+                  <p className="text-xs text-primary font-bold break-all px-2 bg-primary/10 py-1 rounded">
+                    {profile.ens}
+                  </p>
+                )}
+
+                {/* Stats Panel */}
               <div className="w-full space-y-2">
                 {profile?.rank_position && (
-                  <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-chart-1/20 via-chart-2/20 to-chart-3/20 border border-primary/30 p-3">
-                    <div className="absolute inset-0 bg-linear-to-r from-transparent via-primary/5 to-transparent animate-shimmer" />
-                    <div className="relative flex items-center gap-3">
-                      <div className="p-2 bg-primary/20 rounded-lg">
-                        <Zap className="h-5 w-5 text-primary animate-pulse" />
-                      </div>
-                      <div className="text-left flex-1">
-                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
-                          Global Rank
-                        </p>
-                        <p className="text-2xl font-bold text-primary">
-                          #{profile.rank_position}
-                        </p>
+                  <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-chart-1/10 via-chart-2/10 to-chart-3/10 border border-primary/30 p-3">
+                      <div className="absolute inset-0 bg-linear-to-r from-transparent via-primary/5 to-transparent animate-shimmer" />
+                      <div className="relative flex items-center gap-3">
+                        <div className="p-2 bg-primary/20 rounded-lg">
+                          <Zap className="h-5 w-5 text-primary animate-pulse" />
+                        </div>
+                        <div className="text-left flex-1">
+                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                            Global Rank
+                          </p>
+                          <p className="text-2xl font-bold text-primary">
+                            #{profile.rank_position}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 {profile?.onchain_since && (
-                  <div className="px-3 py-2 bg-card/50 border border-border rounded-md">
-                    <p className="text-[10px] text-chart-3 font-mono uppercase tracking-widest">
-                      ⚡ ONCHAIN SINCE{" "}
-                      {new Date(profile.onchain_since).toLocaleDateString(
-                        "en-US",
-                        {
-                          month: "short",
-                          year: "numeric",
-                        }
-                      )}
-                    </p>
-                  </div>
-                )}
+                  <div className="px-3 py-2 bg-card/20 border border-border rounded-md">
+                      <p className="text-[10px] text-chart-3 font-mono uppercase tracking-widest">
+                        ⚡ ONCHAIN SINCE{" "}
+                        {new Date(profile.onchain_since).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
 
             <div className="flex flex-col items-center space-y-3">
-              <div className="flex items-center gap-2 px-3 py-1 bg-card border border-primary/20 rounded-md font-mono text-xs">
-                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                {address?.slice(0, 6)}...{address?.slice(-4)}
-              </div>
+              <div className="flex items-center gap-2 px-3 py-1 bg-card/20 border border-primary/20 rounded-md font-mono text-xs">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  {address?.slice(0, 6)}...{address?.slice(-4)}
+                </div>
 
-              <img
-                src={"/spr_catbig_w_capsule.gif"}
-                alt="Profile Avatar"
-                className="size-48 object-cover"
-              />
+                <img
+                  src={"/spr_catbig_w_capsule.gif"}
+                  alt="Profile Avatar"
+                  className="size-48 object-cover"
+                />
 
-              {profile?.bio && (
-                <p className="text-sm text-center text-muted-foreground line-clamp-3 px-2">
-                  {profile.bio}
-                </p>
-              )}
-              <div className="flex gap-1.5 flex-wrap justify-center">
-                {profile?.main_role && (
-                  <Badge variant="default" className="text-xs">
-                    {profile.main_role.charAt(0).toUpperCase() +
-                      profile.main_role.slice(1)}
-                  </Badge>
-                )}
-                {profile?.tags.slice(0, 3).map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
-                {profile?.tags && profile.tags.length > 3 && (
-                  <Badge variant="secondary" className="text-xs">
-                    +{profile.tags.length - 3}
-                  </Badge>
-                )}
-                {profile?.human_checkmark && (
-                  <Badge
-                    variant="secondary"
-                    className="bg-green-500/10 text-green-500 text-xs"
-                  >
-                    ✓ Verified
-                  </Badge>
-                )}
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center">
-              {/* Connected Accounts */}
-              {profile?.accounts && profile.accounts.length > 0 && (
-                <div className="w-full space-y-1.5">
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">
-                    ⚡ Linked Accounts
+                {profile?.bio && (
+                  <p className="text-sm text-center text-muted-foreground line-clamp-3 px-2">
+                    {profile.bio}
                   </p>
-                  {profile.accounts.slice(0, 3).map((account) => (
+                )}
+                <div className="flex gap-1.5 flex-wrap justify-center">
+                  {profile?.main_role && (
+                    <Badge variant="default" className="text-xs">
+                      {profile.main_role.charAt(0).toUpperCase() +
+                        profile.main_role.slice(1)}
+                    </Badge>
+                  )}
+                  {profile?.tags.slice(0, 3).map((tag) => (
+                    <Badge key={tag} variant="secondary" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                  {profile?.tags && profile.tags.length > 3 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{profile.tags.length - 3}
+                    </Badge>
+                  )}
+                  {profile?.human_checkmark && (
+                    <Badge
+                      variant="secondary"
+                      className="bg-green-500/10 text-green-500 text-xs"
+                    >
+                      ✓ Verified
+                    </Badge>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center justify-center">
+                {/* Connected Accounts */}
+                {profile?.accounts && profile.accounts.length > 0 && (
+                  <div className="w-full space-y-1.5">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">
+                      ⚡ Linked Accounts
+                    </p>
+                    {profile.accounts.slice(0, 3).map((account) => (
                     <div
                       key={account.identifier}
-                      className="flex items-center gap-2 text-sm p-2 rounded bg-card border border-primary/10 hover:border-primary/30 transition-colors min-w-0"
+                      className="flex items-center gap-2 text-sm p-2 rounded bg-card/10 border border-primary/10 hover:border-primary/30 transition-colors min-w-0"
                     >
-                      <Badge
-                        variant="outline"
-                        className="text-[10px] shrink-0 capitalize border-primary/30 text-primary"
-                      >
-                        {account.source}
-                      </Badge>
-                      <span className="text-muted-foreground flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-mono">
-                        {formatIdentifier(account.username) ||
-                          formatIdentifier(account.identifier)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="w-full mt-6">
-            {/* POAP Section - All in One */}
-            {!data || data.length === 0 ? (
-              <div className="flex items-center justify-center gap-3 py-6 text-center rounded-lg bg-card/30">
-                <div className="relative">
-                  <Trophy className="h-8 w-8 text-muted-foreground/50" />
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary/30 rounded-full animate-ping" />
-                </div>
-                <div className="text-left">
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                    No Achievements Yet
-                  </p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    <span className="text-chart-2">▸</span> Attend hackathons to
-                    unlock POAPs
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="relative overflow-hidden rounded-lg bg-card/30 p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Trophy className="h-4 w-4 text-primary animate-pulse shrink-0" />
-                    <p className="text-xs font-medium text-primary capitalize tracking-wide">
-                      Achievement Gallery
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <p className="text-xs font-mono text-muted-foreground">
-                      Total:
-                    </p>
-                    <p className="text-lg font-medium text-chart-2">
-                      {data.length}
-                    </p>
-                  </div>
-                </div>
-                <ScrollArea className="w-full whitespace-nowrap">
-                  <div className="flex gap-4 py-1">
-                    {data.map((poap, index) => (
-                      <div
-                        key={poap.tokenId}
-                        className="group relative flex flex-col items-center gap-2 transition-all active:scale-95"
-                        style={{ animationDelay: `${index * 50}ms` }}
-                      >
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-primary/20 rounded-full" />
-                          <img
-                            src={poap.event.image_url}
-                            alt={poap.event.name}
-                            className="relative size-16 rounded-full object-cover"
-                          />
-                        </div>
-                        <a
-                          href={poap.event.event_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity bg-primary rounded-full p-2"
-                          title={poap.event.name}
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] shrink-0 capitalize border-primary/30 text-primary"
                         >
-                          <ExternalLink className="h-3 w-3 text-primary-foreground" />
-                        </a>
+                          {account.source}
+                        </Badge>
+                        <span className="text-muted-foreground flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-mono">
+                          {formatIdentifier(account.username) ||
+                            formatIdentifier(account.identifier)}
+                        </span>
                       </div>
                     ))}
                   </div>
-                  <ScrollBar
-                    orientation="horizontal"
-                    className="bg-primary/10"
-                  />
-                </ScrollArea>
+                )}
               </div>
-            )}
+            </div>
+
+            <div className="w-full mt-6">
+              {/* POAP Section - All in One */}
+            {!data || data.length === 0 ? (
+              <div className="flex items-center justify-center gap-3 py-6 text-center rounded-lg bg-card/80">
+                  <div className="relative">
+                    <Trophy className="h-8 w-8 text-muted-foreground/50" />
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary/30 rounded-full animate-ping" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
+                      No Achievements Yet
+                    </p>
+                    <p className="text-xs text-muted-foreground font-mono">
+                      <span className="text-chart-2">▸</span> Attend hackathons
+                      to unlock POAPs
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative overflow-hidden rounded-lg bg-indigo-950/80 p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Trophy className="h-4 w-4 text-primary animate-pulse shrink-0" />
+                      <p className="text-xs font-medium text-primary capitalize tracking-wide">
+                        Achievement Gallery
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <p className="text-xs font-mono text-muted-foreground">
+                        Total:
+                      </p>
+                      <p className="text-lg font-medium text-chart-2">
+                        {data.length}
+                      </p>
+                    </div>
+                  </div>
+                  <ScrollArea className="w-full whitespace-nowrap">
+                    <div className="flex gap-4 py-1">
+                      {data.map((poap, index) => (
+                        <div
+                          key={poap.tokenId}
+                          className="group relative flex flex-col items-center gap-2 transition-all active:scale-95"
+                          style={{ animationDelay: `${index * 50}ms` }}
+                        >
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-primary/20 rounded-full" />
+                            <img
+                              src={poap.event.image_url}
+                              alt={poap.event.name}
+                              className="relative size-16 rounded-full object-cover"
+                            />
+                          </div>
+                          <a
+                            href={poap.event.event_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity bg-primary rounded-full p-2"
+                            title={poap.event.name}
+                          >
+                            <ExternalLink className="h-3 w-3 text-primary-foreground" />
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                    <ScrollBar
+                      orientation="horizontal"
+                      className="bg-primary/10"
+                    />
+                  </ScrollArea>
+                </div>
+              )}
+            </div>
+
+            <div></div>
+
+            {/* Action Buttons */}
+            <div className="w-full mt-6 grid grid-cols-2 gap-3">
+              <Link
+                href={"/world"}
+                className="w-full flex justify-center items-center bg-card/10 hover:bg-card/20 border-2 border-primary text-primary font-mono text-sm h-12 rounded-lg shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all uppercase tracking-wider"
+              >
+                🌍 Enter World
+              </Link>
+
+              <Link
+                href={"/events"}
+                className="w-full flex justify-center items-center bg-card/10 hover:bg-card/20 border-2 border-chart-2 text-chart-2 font-mono text-sm h-12 rounded-lg shadow-[0_0_15px_rgba(var(--chart-2),0.3)] hover:shadow-[0_0_25px_rgba(var(--chart-2),0.5)] transition-all uppercase tracking-wider"
+              >
+                🎯 Browse Events
+              </Link>
+            </div>
           </div>
-
-          <div></div>
-
-          {/* Action Buttons */}
-          <div className="w-full mt-6 grid grid-cols-2 gap-3">
-            <Link
-              href={"/world"}
-              className="w-full flex justify-center items-center bg-card hover:bg-card/80 border-2 border-primary text-primary font-mono text-sm h-12 rounded-lg shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all uppercase tracking-wider"
-            >
-              🌍 Enter World
-            </Link>
-
-            <Link
-              href={"/events"}
-              className="w-full flex justify-center items-center bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-sm h-12 rounded-lg shadow-[0_0_15px_rgba(var(--chart-2),0.3)] hover:shadow-[0_0_25px_rgba(var(--chart-2),0.5)] transition-all uppercase tracking-wider"
-            >
-              🎯 Browse Events
-            </Link>
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }
