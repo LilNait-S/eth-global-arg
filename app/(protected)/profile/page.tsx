@@ -283,15 +283,15 @@ export default function ProfilePage() {
                       {data.map((poap, index) => (
                         <div
                           key={poap.tokenId}
-                          className="group relative flex flex-col items-center gap-2 transition-all active:scale-95"
+                          className="group relative flex flex-col items-center gap-2 transition-all active:scale-95 shrink-0"
                           style={{ animationDelay: `${index * 50}ms` }}
                         >
-                          <div className="relative">
+                          <div className="relative w-16 h-16">
                             <div className="absolute inset-0 bg-primary/20 rounded-full" />
                             <img
                               src={poap.event.image_url}
                               alt={poap.event.name}
-                              className="relative size-16 rounded-full object-cover"
+                              className="relative w-16 h-16 rounded-full object-cover"
                             />
                           </div>
                           <a
