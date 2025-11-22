@@ -1,4 +1,4 @@
-export type PoapEvent = {
+export type PoapEventDetails = {
   channel: string
   city: string
   country: string
@@ -44,4 +44,24 @@ export type PoapToken = {
   migrated: string
   owner: string
   tokenId: string
+}
+
+export type PoapPagination<T> = {
+  limit: number
+  offset: number
+  total: number
+  transferCount: number
+  tokens: T
+}
+
+export type PoapTokenSummary = {
+  created: string
+  id: string
+  migrated: string
+  owner: {
+    id: string
+    tokensOwned: number
+    ens?: string
+  }
+  transferCount: string
 }
