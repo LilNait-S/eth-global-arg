@@ -1,103 +1,124 @@
-import Image from "next/image";
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { useGetEventPoapById, useGetScanAddress } from "@/services/api/poap"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { ArrowRight, Menu, X, Zap } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useAccount } from "wagmi"
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { data } = useGetScanAddress()
+  const { data: eventData } = useGetEventPoapById({ eventId: "16947" })
+  console.log("eventData", eventData)
+  console.log("data", data)
+  const router = useRouter()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { isConnected } = useAccount()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    if (isConnected) {
+      router.push("/profile")
+    }
+  }, [isConnected, router])
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+        <nav className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <Zap className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <span className="text-xl font-bold">hackaton arg</span>
+          </div>
+
+          <ConnectButton />
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </nav>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="border-t border-border bg-background md:hidden">
+            <div className="container mx-auto flex flex-col gap-4 px-4 py-6">
+              <a
+                href="#product"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Product
+              </a>
+              <a
+                href="#how-it-works"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                How it works
+              </a>
+              <a
+                href="#organizers"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                For organizers
+              </a>
+              <a
+                href="#community"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Community
+              </a>
+              <Button className="w-full">Join beta</Button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      <main>
+        {/* Hero Section */}
+        <section className="container mx-auto max-w-7xl px-4 py-16 md:py-24">
+          <div className="flex flex-col items-center justify-center space-y-8 text-center">
+            <img
+              src={"/LOGO-export.gif"}
+              alt="Hackathon Argentina Logo"
+              className="size-48 md:size-60 animate-fade-in"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+            <div className="space-y-6 max-w-3xl">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-7xl bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                Connect with hackers
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+                Join the largest blockchain hackathon community in Argentina.
+                Build, collaborate, and showcase your projects with passionate
+                developers.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto sm:min-w-[400px]">
+              <Button size="lg" className="text-base flex-1 sm:flex-none">
+                Explore as guest
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              {!isConnected && <ConnectButton />}
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
