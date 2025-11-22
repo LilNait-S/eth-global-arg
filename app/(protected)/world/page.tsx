@@ -147,9 +147,11 @@ export default function WorldPage() {
                           >
                             🎫 View Event
                           </Button>
-                          <Button className="w-full bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all">
-                            👥 Find Hackers
-                          </Button>
+                          <Link href={`/find-hackers?location=${encodeURIComponent(event.location)}&event=${encodeURIComponent(event.name)}`}>
+                            <Button className="w-full bg-card hover:bg-card/80 border-2 border-chart-2 text-chart-2 font-mono text-xs h-9 shadow-[0_0_15px_rgba(var(--chart-2),0.3)] transition-all">
+                              👥 Find Hackers
+                            </Button>
+                          </Link>
                         </div>
 
                         {/* Modal Arrow */}
